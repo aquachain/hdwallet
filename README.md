@@ -1,26 +1,10 @@
-<h3 align="center">
-  <br />
-  <img src="https://user-images.githubusercontent.com/168240/51436479-a4cf9e80-1c42-11e9-9af3-3bb827b8f2de.png" alt="logo" width="600" />
-  <br />
-  <br />
-  <br />
-</h3>
+# hdwallet
 
-# go-ethereum-hdwallet
-
-> Ethereum HD Wallet derivations from [mnemonic] seed in Go (golang). Implements the [go-ethereum](https://github.com/ethereum/go-ethereum) [`accounts.Wallet`](https://github.com/ethereum/go-ethereum/blob/master/accounts/accounts.go) interface.
-
-[![License](http://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/miguelmota/go-ethereum-hdwallet/master/LICENSE) [![Build Status](https://travis-ci.org/miguelmota/go-ethereum-hdwallet.svg?branch=master)](https://travis-ci.org/miguelmota/go-ethereum-hdwallet) [![Go Report Card](https://goreportcard.com/badge/github.com/miguelmota/go-ethereum-hdwallet?)](https://goreportcard.com/report/github.com/miguelmota/go-ethereum-hdwallet) [![GoDoc](https://godoc.org/github.com/miguelmota/go-ethereum-hdwallet?status.svg)](https://godoc.org/github.com/miguelmota/go-ethereum-hdwallet)
-
-## Install
-
-```bash
-go get -u github.com/miguelmota/go-ethereum-hdwallet
-```
+Ethereum HD Wallet derivations from [mnemonic] seed in Go (golang). Implements the [go-ethereum](https://github.com/ethereum/go-ethereum) [`accounts.Wallet`](https://github.com/ethereum/go-ethereum/blob/master/accounts/accounts.go) interface.
 
 ## Documenation
 
-[https://godoc.org/github.com/miguelmota/go-ethereum-hdwallet](https://godoc.org/github.com/miguelmota/go-ethereum-hdwallet)
+[https://godoc.org/github.com/aquachain/hdwallet](https://godoc.org/github.com/aquachain/hdwallet)
 
 ## Getting started
 
@@ -31,12 +15,12 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/miguelmota/go-ethereum-hdwallet"
+	"github.com/aquachain/hdwallet"
 )
 
 func main() {
 	mnemonic := "tag volcano eight thank tide danger coast health above argue embrace heavy"
-	wallet, err := hdwallet.NewFromMnemonic(mnemonic)
+	wallet, err := hdwallet.NewFromMnemonic(mnemonic, "") // optional passphrase
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -71,7 +55,7 @@ import (
 	"github.com/davecgh/go-spew/spew"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/miguelmota/go-ethereum-hdwallet"
+	"github.com/aquachain/hdwallet"
 )
 
 func main() {
