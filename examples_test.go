@@ -37,7 +37,7 @@ func ExampleNewFromMnemonic() {
 	// 0x8230645aC28A4EdD1b0B53E7Cd8019744E9dD559
 }
 
-func ExampleWalletDerive() {
+func ExampleWallet_Derive() {
 	mnemonic := "tag volcano eight thank tide danger coast health above argue embrace heavy"
 
 	wallet, err := hdwallet.NewFromMnemonic(mnemonic, "")
@@ -66,10 +66,14 @@ func ExampleWalletDerive() {
 	}
 
 	fmt.Printf("Public key in hex: %s\n", publicKey)
+	// Output:
+	// Account address: 0xC49926C4124cEe1cbA0Ea94Ea31a6c12318df947
+	// Private key in hex: 63e21d10fd50155dbba0e7d3f7431a400b84b4c2ac1ee38872f82448fe3ecfb9
+	// Public key in hex: 6005c86a6718f66221713a77073c41291cc3abbfcd03aa4955e9b2b50dbf7f9b6672dad0d46ade61e382f79888a73ea7899d9419becf1d6c9ec2087c1188fa18
 
 }
 
-func ExampleSeed() {
+func ExampleNewSeed() {
 	seed, _ := hdwallet.NewSeed()
 	wallet, err := hdwallet.NewFromSeed(seed)
 	if err != nil {
@@ -93,7 +97,7 @@ func ExampleSeed() {
 	fmt.Println(account.Address.Hex())
 }
 
-func ExampleSign() {
+func ExampleNewFromMnemonic_sign() {
 	mnemonic := "tag volcano eight thank tide danger coast health above argue embrace heavy"
 	wallet, err := hdwallet.NewFromMnemonic(mnemonic, "")
 	if err != nil {
