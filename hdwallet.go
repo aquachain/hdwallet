@@ -31,6 +31,8 @@ var DefaultRootDerivationLen = len(DefaultRootDerivationPath)
 var DefaultBaseDerivationPath = accounts.DefaultBaseDerivationPath
 var DefaultBaseDerivationLen = len(DefaultBaseDerivationPath)
 
+var DefaultNet = &chaincfg.MainNetParams
+
 const (
 	MaxPath            = uint32(0xffffffff)
 	FirstHardenedChild = uint32(0x80000000)
@@ -48,7 +50,11 @@ type Wallet struct {
 }
 
 func newWallet(seed []byte) (*Wallet, error) {
-	masterKey, err := hdkeychain.NewMaster(seed, &chaincfg.MainNetParams)
+	return newWalletCfg(seed, DefaultNet)
+}
+
+func newWalletCfg(seed []byte, cfg *chaincfg.Params) (*Wallet, error) {
+	masterKey, err := hdkeychain.NewMaster(seed, cfg)
 	if err != nil {
 		return nil, err
 	}
@@ -63,6 +69,11 @@ func newWallet(seed []byte) (*Wallet, error) {
 
 // NewFromMnemonic returns a new wallet from a BIP-39 mnemonic.
 func NewFromMnemonic(mnemonic string, passphrase string) (*Wallet, error) {
+	return NewFromMnemonicCfg(DefaultNet, mnemonic, passphrase)
+}
+
+// NewFromMnemonicCfg returns a new wallet from a BIP-39 mnemonic.
+func NewFromMnemonicCfg(cfg *chaincfg.Params, mnemonic string, passphrase string) (*Wallet, error) {
 	if mnemonic == "" {
 		return nil, errors.New("mnemonic is required")
 	}
@@ -76,7 +87,7 @@ func NewFromMnemonic(mnemonic string, passphrase string) (*Wallet, error) {
 		return nil, err
 	}
 
-	wallet, err := newWallet(seed)
+	wallet, err := newWalletCfg(seed, cfg)
 	if err != nil {
 		return nil, err
 	}
@@ -85,13 +96,16 @@ func NewFromMnemonic(mnemonic string, passphrase string) (*Wallet, error) {
 	return wallet, nil
 }
 
-// NewFromSeed returns a new wallet from a BIP-39 seed.
-func NewFromSeed(seed []byte) (*Wallet, error) {
+func NewFromSeedCustom(seed []byte, cfg *chaincfg.Params) (*Wallet, error) {
 	if len(seed) == 0 {
 		return nil, errors.New("seed is required")
 	}
+	return newWalletCfg(seed, cfg)
+}
 
-	return newWallet(seed)
+// NewFromSeed returns a new wallet from a BIP-39 seed.
+func NewFromSeed(seed []byte) (*Wallet, error) {
+	return NewFromSeedCustom(seed, DefaultNet)
 }
 
 // URL implements accounts.Wallet, returning the URL of the device that
