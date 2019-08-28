@@ -215,9 +215,16 @@ func TestWallet(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-
 	words := strings.Split(mnemonic, " ")
 	if len(words) != 12 {
-		t.Error("expected 12 words")
+		t.Error("expected 12 words, got", len(words))
+	}
+	mnemonic, err = NewMnemonic(256)
+	if err != nil {
+		t.Error(err)
+	}
+	words = strings.Split(mnemonic, " ")
+	if len(words) != 24 {
+		t.Error("expected 24 words, got", len(words))
 	}
 }
