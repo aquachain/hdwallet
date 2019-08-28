@@ -1,7 +1,7 @@
 all: deps bin/derive bin/keys bin/seed bin/sign
 
 test: deps
-	go test -v ./...
+	go test -v .
 
 deps:
 	go get -v -d ./...
