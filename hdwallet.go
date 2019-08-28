@@ -49,6 +49,11 @@ type Wallet struct {
 	stateLock sync.RWMutex
 }
 
+// MasterKey returns the underlying hdkeychain.ExtendedKey used by the wallet
+func (w *Wallet) MasterKey() *hdkeychain.ExtendedKey {
+	return w.masterKey
+}
+
 func newWallet(seed []byte) (*Wallet, error) {
 	return newWalletCfg(seed, DefaultNet)
 }
