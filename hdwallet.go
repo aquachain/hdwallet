@@ -31,7 +31,10 @@ var DefaultRootDerivationLen = len(DefaultRootDerivationPath)
 var DefaultBaseDerivationPath = accounts.DefaultBaseDerivationPath
 var DefaultBaseDerivationLen = len(DefaultBaseDerivationPath)
 
-var MaxPath = uint32(0xffffffff)
+const (
+	MaxPath            = uint32(0xffffffff)
+	FirstHardenedChild = uint32(0x80000000)
+)
 
 // Wallet is the underlying wallet struct.
 type Wallet struct {
