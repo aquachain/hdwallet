@@ -1,16 +1,18 @@
+//+build ignore
+
 package main
 
 import (
 	"fmt"
 	"log"
 
-	"github.com/miguelmota/go-ethereum-hdwallet"
+	"github.com/aquachain/hdwallet"
 )
 
 func main() {
 	mnemonic := "tag volcano eight thank tide danger coast health above argue embrace heavy"
 
-	wallet, err := hdwallet.NewFromMnemonic(mnemonic)
+	wallet, err := hdwallet.NewFromMnemonic(mnemonic, "")
 	if err != nil {
 		log.Fatal(err)
 	}

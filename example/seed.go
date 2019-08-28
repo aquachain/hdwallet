@@ -1,10 +1,12 @@
+//+build ignore
+
 package main
 
 import (
 	"fmt"
 	"log"
 
-	"github.com/miguelmota/go-ethereum-hdwallet"
+	"github.com/aquachain/hdwallet"
 )
 
 func main() {
