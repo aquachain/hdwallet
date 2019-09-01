@@ -10,13 +10,14 @@ import (
 
 	"github.com/btcsuite/btcd/chaincfg"
 	"github.com/btcsuite/btcutil/hdkeychain"
-	ethereum "github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/accounts"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/tyler-smith/go-bip39"
+	aquachain "gitlab.com/aquachain/aquachain"
+	"gitlab.com/aquachain/aquachain/aqua/accounts"
+	"gitlab.com/aquachain/aquachain/common"
+	"gitlab.com/aquachain/aquachain/common/hexutil"
+	"gitlab.com/aquachain/aquachain/core/types"
+	"gitlab.com/aquachain/aquachain/crypto"
+	"gitlab.com/aquachain/aquachain/params"
 )
 
 // DefaultRootDerivationPath is the root path to which custom derivation endpoints
@@ -222,7 +223,7 @@ func (w *Wallet) Derive(path accounts.DerivationPath, pin bool) (accounts.Accoun
 // user used previously (based on the chain state), but ones that he/she did not
 // explicitly pin to the wallet manually. To avoid chain head monitoring, self
 // derivation only runs during account listing (and even then throttled).
-func (w *Wallet) SelfDerive(base []accounts.DerivationPath, chain ethereum.ChainStateReader) {
+func (w *Wallet) SelfDerive(base []accounts.DerivationPath, chain aquachain.ChainStateReader) {
 	// TODO: self derivation
 }
 
@@ -259,12 +260,14 @@ func (w *Wallet) SignTx(account accounts.Account, tx *types.Transaction, chainID
 	}
 
 	// Sign the transaction and verify the sender to avoid hardware fault surprises
-	signedTx, err := types.SignTx(tx, types.HomesteadSigner{}, privateKey)
+	signer := types.NewEIP155Signer(params.MainnetChainConfig.ChainId)
+	signedTx, err := types.SignTx(tx, signer, privateKey)
 	if err != nil {
+		println("sign err " + err.Error())
 		return nil, err
 	}
 
-	msg, err := signedTx.AsMessage(types.HomesteadSigner{})
+	msg, err := signedTx.AsMessage(signer)
 	if err != nil {
 		return nil, err
 	}

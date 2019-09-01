@@ -6,9 +6,10 @@ import (
 	"math/big"
 
 	"github.com/aquachain/hdwallet"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/params"
+
+	"gitlab.com/aquachain/aquachain/common"
+	"gitlab.com/aquachain/aquachain/core/types"
+	"gitlab.com/aquachain/aquachain/params"
 )
 
 func ExampleNewFromMnemonic() {
@@ -123,7 +124,7 @@ func ExampleNewFromMnemonic_sign() {
 		log.Fatal(err)
 	}
 
-	chainid := params.MainnetChainConfig.ChainID
+	chainid := params.MainnetChainConfig.ChainId
 	tx2, err := signedTx.AsMessage(types.NewEIP155Signer(chainid))
 	if err != nil {
 		log.Println(err)

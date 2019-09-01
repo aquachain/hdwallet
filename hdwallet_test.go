@@ -5,10 +5,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/crypto"
+	"gitlab.com/aquachain/aquachain/common"
+	"gitlab.com/aquachain/aquachain/common/hexutil"
+	"gitlab.com/aquachain/aquachain/core/types"
+	"gitlab.com/aquachain/aquachain/crypto"
 )
 
 // TODO: table test
@@ -85,28 +85,34 @@ func TestWallet(t *testing.T) {
 	privateKeyHex, err := wallet.PrivateKeyHex(account)
 	if err != nil {
 		t.Error(err)
+		return
 	}
 
 	if privateKeyHex != "63e21d10fd50155dbba0e7d3f7431a400b84b4c2ac1ee38872f82448fe3ecfb9" {
 		t.Error("wrong private key")
+		return
 	}
 
 	publicKeyHex, err := wallet.PublicKeyHex(account)
 	if err != nil {
 		t.Error(err)
+		return
 	}
 
 	if publicKeyHex != "6005c86a6718f66221713a77073c41291cc3abbfcd03aa4955e9b2b50dbf7f9b6672dad0d46ade61e382f79888a73ea7899d9419becf1d6c9ec2087c1188fa18" {
 		t.Error("wrong public key")
+		return
 	}
 
 	addressHex, err := wallet.AddressHex(account)
 	if err != nil {
 		t.Error(err)
+		return
 	}
 
 	if addressHex != "0xC49926C4124cEe1cbA0Ea94Ea31a6c12318df947" {
 		t.Error("wrong address")
+		return
 	}
 
 	nonce := uint64(0)
@@ -121,25 +127,31 @@ func TestWallet(t *testing.T) {
 	signedTx, err := wallet.SignTx(account, tx, nil)
 	if err != nil {
 		t.Error(err)
+		return
 	}
 
 	v, r, s := signedTx.RawSignatureValues()
 	if v.Cmp(big.NewInt(0)) != 1 {
 		t.Error("expected v value")
+		return
 	}
 	if r.Cmp(big.NewInt(0)) != 1 {
 		t.Error("expected r value")
+		return
 	}
 	if s.Cmp(big.NewInt(0)) != 1 {
 		t.Error("expected s value")
+		return
 	}
 
 	signedTx2, err := wallet.SignTxWithPassphrase(account, "", tx, nil)
 	if err != nil {
 		t.Error(err)
+		return
 	}
 	if signedTx.Hash() != signedTx2.Hash() {
 		t.Error("expected match")
+		return
 	}
 
 	data = []byte("hello")
@@ -147,6 +159,7 @@ func TestWallet(t *testing.T) {
 	sig, err := wallet.SignHash(account, hash.Bytes())
 	if err != nil {
 		t.Error(err)
+		return
 	}
 	if len(sig) == 0 {
 		t.Error("expected signature")
@@ -155,6 +168,7 @@ func TestWallet(t *testing.T) {
 	sig2, err := wallet.SignHashWithPassphrase(account, "", hash.Bytes())
 	if err != nil {
 		t.Error(err)
+		return
 	}
 	if len(sig2) == 0 {
 		t.Error("expected signature")

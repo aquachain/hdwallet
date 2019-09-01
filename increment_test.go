@@ -3,7 +3,7 @@ package hdwallet
 import (
 	"testing"
 
-	"github.com/ethereum/go-ethereum/accounts"
+	"gitlab.com/aquachain/aquachain/aqua/accounts"
 )
 
 const testAddress = "0xC49926C4124cEe1cbA0Ea94Ea31a6c12318df947"
