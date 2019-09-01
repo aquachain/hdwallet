@@ -8,8 +8,8 @@ import (
 
 	"github.com/aquachain/hdwallet"
 	"github.com/davecgh/go-spew/spew"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/types"
+	"gitlab.com/aquachain/aquachain/common"
+	"gitlab.com/aquachain/aquachain/core/types"
 )
 
 func main() {
@@ -33,7 +33,7 @@ func main() {
 	var data []byte
 
 	tx := types.NewTransaction(nonce, toAddress, value, gasLimit, gasPrice, data)
-	signedTx, err := wallet.SignTx(account, tx, nil)
+	signedTx, err := wallet.SignTx(account, tx, big.NewInt(0))
 	if err != nil {
 		log.Fatal(err)
 	}
